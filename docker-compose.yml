@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: notesapp
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db
+
+  backend:
+    build: ./backend  
+    container_name: notesapp-backend
+    restart: always
+    ports:
+      - "5001:5000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/notesapp
+      - JWT_SECRET=notes_app_secret
+      - PORT=5000
+
+  frontend:
+    build: ./frontend
+    container_name: notesapp-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5001/api
+    depends_on:
+      - backend
+volumes:
+  mongo-data:

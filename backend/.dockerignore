@@ -1,0 +1,8 @@
+#backend
+./backend/node_modules
+./backend/dist
+./.backend/.env
+./backend/.envlocal
+./backend/.env.development
+.git
+.gitignore
