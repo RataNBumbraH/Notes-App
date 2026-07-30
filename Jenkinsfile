@@ -20,7 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Code Building'
-                sh 'docker compose down && docker compose up -d --build'
+                sh  'docker compose up -d --build'
             }
         }
         stage('Pushing dockerhub') {
@@ -30,10 +30,5 @@ pipeline {
                 docker_push('notes-cicd-backend','latest','ratanbumbrah')
                 }
             }
-        stage('Deploy') {
-            steps {
-                echo 'Code Deploying'
-            }
-        }
     }
 }
